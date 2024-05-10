@@ -1,0 +1,9 @@
+[submodule "metapool-router/lib/forge-std"]
+	path = metapool-router/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "metapool-router/lib/v1-pool"]
+	path = metapool-router/lib/v1-pool
+	url = https://github.com/napierfi/v1-pool
+[submodule "metapool-router/lib/twocrypto-ng"]
+	path = metapool-router/lib/twocrypto-ng
+	url = https://github.com/curvefi/twocrypto-ng

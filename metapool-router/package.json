@@ -1,0 +1,36 @@
+{
+  "name": "metapool-router",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "build": "forge build",
+    "test": "forge test",
+    "doc": "forge doc",
+    "lint:check:sol": "forge fmt --check",
+    "lint:fix:sol": "forge fmt",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/massun-onibakuchi/hardhat-foundry-template/"
+  },
+  "keywords": [
+    "hardhat",
+    "solidity",
+    "foundry"
+  ],
+  "author": "0xbakuchi",
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/massun-onibakuchi/hardhat-foundry-template/#readme",
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=7.0.0"
+  },
+  "lint-staged": {
+    "*.sol": "forge fmt"
+  },
+  "devDependencies": {
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  }
+}

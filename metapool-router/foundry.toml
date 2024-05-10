@@ -1,0 +1,49 @@
+# your can use the init-foundry task to create a foundry.toml file.
+# The file will be created using the proper values to make Foundry work well with your Hardhat project.
+
+[profile.default]
+solc = "0.8.24"
+evm_version = "cancun"
+src = 'src'
+out = 'out'
+libs = ['lib', 'node_modules']
+test = 'test'
+remappings = ["@napier/v1-pool=lib/v1-pool/", 'forge-std=lib/forge-std/src/']
+
+bytecode_hash = 'none'
+optimizer_runs = 10_000_000
+# extra_output = ['storageLayout']
+
+ffi = true
+fs_permissions = [
+    { access = "read", path = "./artifacts/" },
+    { access = "read", path = "./out/" },
+]
+
+# this is convenient for our tests.
+block_timestamp = 31536000 # 365days
+
+[fuzz]
+runs = 1000
+max_test_rejects = 1_000_000
+
+[doc]
+out = 'docs/foundry-docs/'
+
+[profile.deep_fuzz]
+[profile.deep_fuzz.fuzz]
+runs = 10_000
+max_test_rejects = 1_000_000
+
+[rpc_endpoints]
+# This section lives outside of profiles and defines a table of RPC endpoints, where the key specifies the RPC endpoints's name and the value is the RPC endpoint itself.
+# The value can either be a valid RPC endpoint or a reference to an environment variable (wrapped with in ${}).
+# These RPC endpoints can be used in tests and Solidity scripts 
+mainnet = "${ETH_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"
+
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+
+# See more config options https://github.com/gakonst/foundry/tree/master/config
