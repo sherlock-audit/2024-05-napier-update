@@ -7,9 +7,6 @@
 [submodule "metapool-router/lib/twocrypto-ng"]
 	path = metapool-router/lib/twocrypto-ng
 	url = https://github.com/curvefi/twocrypto-ng
-[submodule "napier-uups-adapters/lib/napier-v1"]
-	path = napier-uups-adapters/lib/napier-v1
-	url = https://github.com/napierfi/napier-v1
 [submodule "napier-uups-adapters/lib/openzeppelin-contracts-upgradeable"]
 	path = napier-uups-adapters/lib/openzeppelin-contracts-upgradeable
 	url = https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable
