@@ -1,9 +1,0 @@
-# Ignore artifacts:
-artifacts
-cache
-hh-cache
-coverage
-coverage*
-typechain-types
-lib/
-docs/foundry-docs
