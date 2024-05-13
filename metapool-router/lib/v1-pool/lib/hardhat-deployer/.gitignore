@@ -1,0 +1,18 @@
+.DS_Store
+
+# Foundry files
+cache/
+out/
+
+# Docs
+docs/
+
+# Dotenv file
+.env
+
+node_modules
+.env
+
+# Hardhat files
+/hh-cache
+/artifacts

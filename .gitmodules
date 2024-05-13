@@ -19,6 +19,3 @@
 [submodule "napier-v1/lib/hardhat-deployer"]
 	path = napier-v1/lib/hardhat-deployer
 	url = https://github.com/napierfi/hardhat-deployer
-[submodule "metapool-router/lib/v1-pool"]
-	path = metapool-router/lib/v1-pool
-	url = https://github.com/napierfi/v1-pool
