@@ -1,0 +1,93 @@
+name: Continuous Integration
+
+concurrency:
+  cancel-in-progress: true
+  group: ${{github.workflow}}-${{github.ref}}
+
+on:
+  - pull_request
+
+env:
+  ETH_RPC_URL: ${{secrets.ETH_RPC_URL}}
+  ETHERSCAN_API_KEY: ${{secrets.ETHERSCAN_API_KEY}}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Clone repo
+        uses: actions/checkout@v3
+
+      - name: Check contracts are linted
+        run: forge fmt --check
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Clone repo with submodules
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+
+      # Workaround for cloning private submodule
+      # https://github.com/actions/checkout/discussions/907
+      - run: |
+          mkdir -p ~/.ssh
+          echo '${{ secrets.DEPLOY_KEY }}' > ~/.ssh/id_deploy_key
+
+          cat << EOF > ~/.ssh/config
+          Host github-napier
+            HostName github.com
+            User git
+            IdentityFile ~/.ssh/id_deploy_key
+            StrictHostKeyChecking no
+          EOF
+
+          # need to change from https to ssh and change to host to match ~/.ssh/config
+          chmod 600 ~/.ssh/id_deploy_key
+          git config submodule.lib/napier-v1.url 'git@github-napier:Napier-Lab/napier-v1.git'
+          git submodule update --init --recursive
+        shell: bash
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - run: pip install -r requirements.txt
+
+      - name: Generate fuzz seed that changes every 3 weeks to avoid burning through RPC allowance
+        run: |
+          seed=$(echo $(($EPOCHSECONDS / 1814400)))
+          echo "FOUNDRY_FUZZ_SEED=$seed" >> $GITHUB_ENV
+
+      - name: Show Foundry config
+        run: forge config
+
+      - name: Run forge tests
+        run: forge test -vvv
+
+  codespell:
+    name: Run codespell
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Run codespell
+        uses: codespell-project/actions-codespell@v2.0
+        with:
+          check_filenames: true
+          skip: ./.git,yarn.lock
